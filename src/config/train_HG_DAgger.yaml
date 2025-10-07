@@ -1,0 +1,106 @@
+defaults:
+  - _self_
+  - task: square
+  # - task: pickcan
+  # - task: twoArmLift
+  # - task: pushT
+  # - task: metaworld_hammer
+  # - task: line_following
+
+
+task_name: ${task.task_name}
+experiment_id: ${AGENT.experiment_id}
+
+
+GENERAL:
+  # simulator and tasks
+  environment: ${task.environment}
+  use_abs_action: ${task.use_abs_action}
+  
+  task: ${task.task_name}
+
+
+  save_results: true
+  
+  number_of_repetitions: ${task.number_of_repetitions}
+  evaluations_per_training: ${task.evaluations_per_training}
+  max_num_of_episodes: ${task.max_num_of_episodes}
+  max_time_steps_episode: ${task.max_time_steps_episode}
+  max_time_steps_per_repetition: ${task.max_time_steps_per_repetition}
+
+  # feedback
+  theta: 0.1  # threshold for each dimension of the oracle teacher's action
+  feedback_threshold: ${task.feedback_threshold}
+  oracle_teacher: true
+  human_teacher: false
+  oracle_teaching_how_offen: 2
+  executed_human_correction: true
+  
+  
+  # adding noise to the teacher action
+  oracle_teacher_noise: 0   # directional noise angle
+  if_biased_directional_noise: false
+  oracle_teacher_magnitude_noise: false 
+  oracle_teacher_magnitude_noise_parameter: 0 # directional noise magnitude
+  oracle_teacher_only_one_dim: false
+  # oracle_teacher_Gaussian_noise: false    # Gaussian noise
+  oracle_teacher_Gaussian_noise: false    # Gaussian noise
+
+AGENT:
+  use_abs_action: ${task.use_abs_action}
+  
+  image_crop_shape: ${task.crop_shape} # used in obs_encoder
+
+  shape_meta: ${task.shape_meta}
+
+  dim_a: ${task.dim_a}
+  dim_o: ${task.dim_o}  # TODO define this in task.yaml
+
+  e: ${task.e} # only define diagional 
+  loss_weight_inverse_e: ${task.loss_weight_inverse_e}
+  policy_model_learning_rate: 0.0003
+  # number_training_iterations: 300
+  number_training_iterations: 1000
+
+  agent: HG_DAgger
+  algorithm: HG_DAgger
+
+
+
+  # Buffer
+  buffer_max_size: 60000
+  buffer_min_size: 32
+  buffer_sampling_rate: 5
+  train_end_episode: true
+  buffer_sampling_size: 32
+  action_upper_limits: 1
+  action_lower_limits: -1
+  
+
+  # log
+  save_policy: true  #also control whether we save data buffer
+  save_buffer: false
+  experiment_id: "${now:%Y%m%d_%H%M%S}_${AGENT.algorithm}_${task.name}"
+  base_dir: saved_data/
+  saved_dir: saved_data/
+  load_policy: false
+
+  load_dir:  outputs/
+  # offline_training: true  
+  offline_training: false
+  # evaluate the policy under saved_dir
+  # evaluate: true
+  evaluate: false
+  # abs dataset
+  load_pretrained_dir: saved_data/robosuite_square/
+  
+  
+
+FEEDBACK:
+  use_space_mouse: false
+  key_type: 1
+  h_up: 0
+  h_down: 0
+  h_right: 1
+  h_left: -1
+  h_null: 0

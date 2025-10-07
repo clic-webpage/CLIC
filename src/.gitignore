@@ -1,0 +1,8 @@
+poetry.lock
+results/
+saved_data/
+__pycache__/
+agents/__pycache__/
+tools/__pycache__/
+outputs/
+outputs_docker/
