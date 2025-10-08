@@ -107,8 +107,10 @@ To run CLIC on a real robot, provide an environment wrapper that exposes robot o
 This code builds on and adapts:
 
 * [IBC](https://github.com/google-research/ibc) (MCMC sampling, baseline)
+* [D-COACH](https://github.com/rperezdattari/Interactive-Learning-with-Corrective-Feedback-for-Policies-based-on-Deep-Neural-Networks)
 * [Diffusion Policy](https://github.com/real-stanford/diffusion_policy)
 * [Ambient Diffusion](https://github.com/giannisdaras/ambient-diffusion)
+* [PVP](https://github.com/metadriverse/pvp)
 * [Robosuite](https://github.com/ARISE-Initiative/robosuite)
 * [Metaworld](https://github.com/Farama-Foundation/Metaworld)
 
